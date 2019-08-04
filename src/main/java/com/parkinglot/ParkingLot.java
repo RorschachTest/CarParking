@@ -21,7 +21,7 @@ public class ParkingLot implements SearchInterface {
   private Map<String, Set<String>> colorToRegMap = new ConcurrentHashMap<>();
   private Map<String, Integer>     regToSpotMap  = new ConcurrentHashMap<>();
 
-  // creating singleton for parkingLot as there can be only one car parking
+  // creating singleton for parkingLot as there can be only one vehicle parking
   public ParkingLot getInstance() {
     if(INSTANCE == null){
       throw new RuntimeException("Sorry, parking lot is not created");
@@ -82,6 +82,18 @@ public class ParkingLot implements SearchInterface {
     availableSpots.add(parkedSpot);
     regToSpotMap.remove(parkedVehicle.getRegisterationNumber());
     colorToRegMap.get(parkedVehicle.getColour()).remove(parkedVehicle.getColour());
+  }
+
+  public void getStatus(){
+
+    System.out.println("Slot No.\tRegistration No.\tColor");
+
+    for(int i=1; i<=MAX_CAPACITY; i++){
+      if(allSpot[i].getFree()==false){
+        Vehicle parkedVehicle = allSpot[i].getParkedVehicle();
+        System.out.println(i+"\t"+parkedVehicle.getRegisterationNumber()+"\t"+parkedVehicle.getColour());
+      }
+    }
   }
 
   @Override public ParkingSpot getBestSpot() {
