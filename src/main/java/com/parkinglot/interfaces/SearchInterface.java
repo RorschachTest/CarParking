@@ -10,8 +10,8 @@ public interface SearchInterface {
 
   List<String> getRegistrationForColor(String color);
 
-  Integer getSlotIdForRegistration(String regId);
+  Integer getSpotIdForRegistration(String regId);
 
-  List<Integer> getSlotForColour(String color);
+  List<Integer> getSpotForColour(String color);
 
 }

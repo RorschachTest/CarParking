@@ -33,7 +33,7 @@ public class ParkingLot implements SearchInterface {
     INSTANCE = new ParkingLot(spotCount);
   }
 
-  public ParkingLot(Integer spotCount) {
+  private ParkingLot(Integer spotCount) {
     if(INSTANCE!=null){
       // making singleton class reflection safe
       // object can't be created twice
@@ -72,6 +72,18 @@ public class ParkingLot implements SearchInterface {
     return parkingTicket;
   }
 
+  public synchronized void unparkVehicle(Integer spotId){
+    ParkingSpot parkedSpot = allSpot[spotId];
+
+    // get parked vehicle details
+    Vehicle parkedVehicle = parkedSpot.getParkedVehicle();
+
+    parkedSpot.setFree(true);
+    availableSpots.add(parkedSpot);
+    regToSpotMap.remove(parkedVehicle.getRegisterationNumber());
+    colorToRegMap.get(parkedVehicle.getColour()).remove(parkedVehicle.getColour());
+  }
+
   @Override public ParkingSpot getBestSpot() {
 
     if(availableSpots.isEmpty()){
@@ -83,16 +95,18 @@ public class ParkingLot implements SearchInterface {
 
   @Override public List<String> getRegistrationForColor(String color) {
 
-    return colorToRegMap.get(color).stream().collect(Collectors.toList());
+    return (colorToRegMap.get(color)==null? null : colorToRegMap.get(color)).stream().collect(Collectors.toList());
   }
 
-  @Override public Integer getSlotIdForRegistration(String regId) {
+  @Override public Integer getSpotIdForRegistration(String regId) {
 
-    return null;
+    return regToSpotMap.get(regId);
   }
 
-  @Override public List<Integer> getSlotForColour(String color) {
+  @Override public List<Integer> getSpotForColour(String color) {
 
-    return null;
+    return getRegistrationForColor(color).stream()
+        .map(reg -> getSpotIdForRegistration(reg))
+        .collect(Collectors.toList());
   }
 }
