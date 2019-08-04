@@ -7,12 +7,15 @@ public class Vehicle {
 
   private ParkingTicket parkingTicket;
 
-  public Vehicle(String registerationNumber, String colour) {
+  public String getRegisterationNumber() {
 
-    this.registerationNumber = registerationNumber;
-    this.colour = colour;
+    return registerationNumber;
   }
 
+  public String getColour() {
+
+    return colour;
+  }
   public ParkingTicket getParkingTicket(){
     return this.parkingTicket;
   }
@@ -20,4 +23,12 @@ public class Vehicle {
   public void assignParkingTicket(ParkingTicket parkingTicket){
     this.parkingTicket = parkingTicket;
   }
+
+  public Vehicle(String registerationNumber, String colour) {
+
+    this.registerationNumber = registerationNumber;
+    this.colour = colour;
+  }
+
+
 }

@@ -1,7 +1,7 @@
 package com.parkinglot;
 
 public class ParkingSpot {
-  private static Integer idCounter = 1;
+  private static Integer idCounter = 0;
 
   public static synchronized Integer getIdCounter() {
 
