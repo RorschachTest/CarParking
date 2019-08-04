@@ -1,4 +1,4 @@
-package com.parkinglot;
+package com.parkinglot.models;
 
 public class ParkingSpot {
   private static Integer idCounter = 0;

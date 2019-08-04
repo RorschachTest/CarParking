@@ -1,4 +1,4 @@
-package com.parkinglot;
+package com.parkinglot.models;
 
 import com.parkinglot.interfaces.SearchInterface;
 

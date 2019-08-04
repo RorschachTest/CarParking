@@ -1,6 +1,6 @@
 package com.parkinglot.interfaces;
 
-import com.parkinglot.ParkingSpot;
+import com.parkinglot.models.ParkingSpot;
 
 import java.util.List;
 
