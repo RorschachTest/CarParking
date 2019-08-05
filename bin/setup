@@ -1,0 +1,9 @@
+# Add script to:
+# * Install dependencies
+# * Build/Compile
+# * Run Test Suit to validate
+
+sudo mvn -f ../pom.xml clean install 
+
+# After this is run, bin/parking_lot
+# should Just Work.

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Add script to run program here.
+# Complete bin/setup so that after it is
+# run, bin/parking_lot can be used to launch
+# it.
+
+# This variable contains absolute path of this `parking_lot` script
+
+# Use DIR variable above to pinpoint your jar/executable/main class
+# e.g.
+# - if java
+   java -jar ../target/parkinglot-1.0-SNAPSHOT.jar $1

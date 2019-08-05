@@ -104,7 +104,7 @@ public class ParkingLot implements SearchInterface {
     for(int i=1; i<=MAX_CAPACITY; i++){
       if(allSpot[i].getFree()==false){
         Vehicle parkedVehicle = allSpot[i].getParkedVehicle();
-        System.out.println(i+"\t\t"+parkedVehicle.getRegisterationNumber()+"\t\t"+parkedVehicle.getColour());
+        System.out.println(i+"\t"+parkedVehicle.getRegisterationNumber()+"\t"+parkedVehicle.getColour());
       }
     }
   }
