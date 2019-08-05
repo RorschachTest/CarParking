@@ -46,12 +46,14 @@ public class ParkingLot implements SearchInterface {
 
       @Override public int compare(ParkingSpot o1, ParkingSpot o2) {
 
-        return o2.getSpotId() - o1.getSpotId();
+        return o1.getSpotId() - o2.getSpotId();
       }
     });
 
     // all spots are available
     for(int i=1; i<=MAX_CAPACITY; i++){
+      ParkingSpot parkingSpot = new ParkingSpot();
+      allSpot[i] = parkingSpot;
       availableSpots.add(allSpot[i]);
     }
     System.out.println("Created a parking lot with "+ MAX_CAPACITY +" slots");
@@ -60,6 +62,7 @@ public class ParkingLot implements SearchInterface {
   public synchronized ParkingTicket parkVehicle(Vehicle vehicle){
     ParkingSpot parkingSpot = getBestSpot();
     allSpot[parkingSpot.getSpotId()].setFree(false);
+    allSpot[parkingSpot.getSpotId()].setParkedVehicle(vehicle);
 
     ParkingTicket parkingTicket = new ParkingTicket(new Date(), parkingSpot.getSpotId());
 
@@ -96,7 +99,7 @@ public class ParkingLot implements SearchInterface {
     for(int i=1; i<=MAX_CAPACITY; i++){
       if(allSpot[i].getFree()==false){
         Vehicle parkedVehicle = allSpot[i].getParkedVehicle();
-        System.out.println(i+"\t"+parkedVehicle.getRegisterationNumber()+"\t"+parkedVehicle.getColour());
+        System.out.println(i+"\t\t"+parkedVehicle.getRegisterationNumber()+"\t\t"+parkedVehicle.getColour());
       }
     }
   }

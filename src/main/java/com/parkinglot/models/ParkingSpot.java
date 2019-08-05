@@ -1,7 +1,7 @@
 package com.parkinglot.models;
 
 public class ParkingSpot {
-  private static Integer idCounter = 0;
+  private static Integer idCounter = 1;
 
   public static synchronized Integer getIdCounter() {
 

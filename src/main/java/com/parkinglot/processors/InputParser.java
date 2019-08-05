@@ -4,9 +4,6 @@ import com.parkinglot.models.ParkingLot;
 import com.parkinglot.models.Vehicle;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.List;
 
 public class InputParser {
   static ParkingLot parkingLot;
@@ -73,6 +70,8 @@ public class InputParser {
 
       } catch (ArrayIndexOutOfBoundsException exp){
         exp.printStackTrace();
+      } catch (Exception e){
+        e.printStackTrace();
       }
   }
   public void parseFileInput(String filePath) {

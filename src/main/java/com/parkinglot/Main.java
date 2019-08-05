@@ -1,3 +1,5 @@
+package com.parkinglot;
+
 import com.parkinglot.processors.InputParser;
 
 import java.io.BufferedReader;
