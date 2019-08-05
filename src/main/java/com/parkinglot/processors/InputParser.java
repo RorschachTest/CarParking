@@ -1,5 +1,6 @@
 package com.parkinglot.processors;
 
+import com.parkinglot.exceptions.ParkingException;
 import com.parkinglot.models.ParkingLot;
 import com.parkinglot.models.Vehicle;
 
@@ -70,7 +71,10 @@ public class InputParser {
 
       } catch (ArrayIndexOutOfBoundsException exp){
         exp.printStackTrace();
-      } catch (Exception e){
+      } catch (ParkingException ep){
+        System.out.println(ep.getMessage());
+      }
+      catch (Exception e){
         e.printStackTrace();
       }
   }

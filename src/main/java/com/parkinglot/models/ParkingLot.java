@@ -1,5 +1,6 @@
 package com.parkinglot.models;
 
+import com.parkinglot.exceptions.ParkingException;
 import com.parkinglot.interfaces.SearchInterface;
 
 import java.util.*;
@@ -24,7 +25,7 @@ public class ParkingLot implements SearchInterface {
   // creating singleton for parkingLot as there can be only one vehicle parking
   public static ParkingLot getInstance() {
     if(INSTANCE == null){
-      throw new RuntimeException("Sorry, parking lot is not created");
+      throw new ParkingException("Sorry, parking lot is not created");
     }
     return INSTANCE;
   }
@@ -37,7 +38,7 @@ public class ParkingLot implements SearchInterface {
     if(INSTANCE!=null){
       // making singleton class reflection safe
       // object can't be created twice
-      throw new RuntimeException("Parking lot is already created");
+      throw new ParkingException("Parking lot is already created");
     }
 
     MAX_CAPACITY = spotCount;
@@ -94,6 +95,10 @@ public class ParkingLot implements SearchInterface {
 
   public void getStatus(){
 
+    if(regToSpotMap.isEmpty()){
+      throw new ParkingException("Parkinglot is empty");
+    }
+
     System.out.println("Slot No.\tRegistration No.\tColor");
 
     for(int i=1; i<=MAX_CAPACITY; i++){
@@ -107,32 +112,44 @@ public class ParkingLot implements SearchInterface {
   @Override public ParkingSpot getBestSpot() {
 
     if(availableSpots.isEmpty()){
-      throw new RuntimeException("Sorry, parking lot is full");
+      throw new ParkingException("Sorry, parking lot is full");
     }
 
     return availableSpots.poll();
   }
 
   @Override public void getRegistrationForColor(String color) {
-    String allReg = String.join(", ", (colorToRegMap.get(color)==null? null : colorToRegMap.get(color))
-        .stream()
-        .collect(Collectors.toList()));
+
+    String allReg;
+    try{
+      allReg = String.join(", ", colorToRegMap.get(color)
+          .stream()
+          .collect(Collectors.toList()));
+    } catch (Exception e){
+      throw new ParkingException("Not Found");
+    }
 
     System.out.println(allReg);
   }
 
   @Override public void getSpotIdForRegistration(String regId) {
 
-    System.out.println(regToSpotMap.get(regId));
+    if(regToSpotMap.get(regId)==null) throw new ParkingException("Not found");
+      System.out.println(regToSpotMap.get(regId));
   }
 
   @Override public void getSpotForColour(String color) {
 
-    String allSpot = String.join(", ", colorToRegMap.get(color).stream()
-        .map(reg -> regToSpotMap.get(reg).toString())
-        .collect(Collectors.toList()));
+    String allSpotforColor;
+    try{
+      allSpotforColor = String.join(", ", colorToRegMap.get(color).stream()
+          .map(reg -> regToSpotMap.get(reg).toString())
+          .collect(Collectors.toList()));
+    } catch(Exception e){
+      throw new ParkingException("Not Found");
+    }
 
-    System.out.println(allSpot);
+    System.out.println(allSpotforColor);
   }
 
 }
