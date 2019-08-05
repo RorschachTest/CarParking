@@ -8,10 +8,10 @@ public interface SearchInterface {
 
   ParkingSpot getBestSpot();
 
-  List<String> getRegistrationForColor(String color);
+  void getRegistrationForColor(String color);
 
-  Integer getSpotIdForRegistration(String regId);
+  void getSpotIdForRegistration(String regId);
 
-  List<Integer> getSpotForColour(String color);
+  void getSpotForColour(String color);
 
 }

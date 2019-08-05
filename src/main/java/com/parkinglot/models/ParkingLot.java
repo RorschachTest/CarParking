@@ -22,14 +22,14 @@ public class ParkingLot implements SearchInterface {
   private Map<String, Integer>     regToSpotMap  = new ConcurrentHashMap<>();
 
   // creating singleton for parkingLot as there can be only one vehicle parking
-  public ParkingLot getInstance() {
+  public static ParkingLot getInstance() {
     if(INSTANCE == null){
       throw new RuntimeException("Sorry, parking lot is not created");
     }
     return INSTANCE;
   }
 
-  public void createParkingLot(Integer spotCount){
+  public static void createParkingLot(Integer spotCount){
     INSTANCE = new ParkingLot(spotCount);
   }
 
@@ -54,6 +54,7 @@ public class ParkingLot implements SearchInterface {
     for(int i=1; i<=MAX_CAPACITY; i++){
       availableSpots.add(allSpot[i]);
     }
+    System.out.println("Created a parking lot with "+ MAX_CAPACITY +" slots");
   }
 
   public synchronized ParkingTicket parkVehicle(Vehicle vehicle){
@@ -69,6 +70,8 @@ public class ParkingLot implements SearchInterface {
     }
     colorToRegMap.get(vehicle.getColour()).add(vehicle.getRegisterationNumber());
 
+    System.out.println("Allocated slot number: " + parkingSpot.getSpotId());
+
     return parkingTicket;
   }
 
@@ -82,6 +85,8 @@ public class ParkingLot implements SearchInterface {
     availableSpots.add(parkedSpot);
     regToSpotMap.remove(parkedVehicle.getRegisterationNumber());
     colorToRegMap.get(parkedVehicle.getColour()).remove(parkedVehicle.getColour());
+
+    System.out.println("Slot number "+ spotId +" is free");
   }
 
   public void getStatus(){
@@ -99,26 +104,32 @@ public class ParkingLot implements SearchInterface {
   @Override public ParkingSpot getBestSpot() {
 
     if(availableSpots.isEmpty()){
-      throw new RuntimeException("Sorry Parking is full");
+      throw new RuntimeException("Sorry, parking lot is full");
     }
 
     return availableSpots.poll();
   }
 
-  @Override public List<String> getRegistrationForColor(String color) {
+  @Override public void getRegistrationForColor(String color) {
+    String allReg = String.join(", ", (colorToRegMap.get(color)==null? null : colorToRegMap.get(color))
+        .stream()
+        .collect(Collectors.toList()));
 
-    return (colorToRegMap.get(color)==null? null : colorToRegMap.get(color)).stream().collect(Collectors.toList());
+    System.out.println(allReg);
   }
 
-  @Override public Integer getSpotIdForRegistration(String regId) {
+  @Override public void getSpotIdForRegistration(String regId) {
 
-    return regToSpotMap.get(regId);
+    System.out.println(regToSpotMap.get(regId));
   }
 
-  @Override public List<Integer> getSpotForColour(String color) {
+  @Override public void getSpotForColour(String color) {
 
-    return getRegistrationForColor(color).stream()
-        .map(reg -> getSpotIdForRegistration(reg))
-        .collect(Collectors.toList());
+    String allSpot = String.join(", ", colorToRegMap.get(color).stream()
+        .map(reg -> regToSpotMap.get(reg).toString())
+        .collect(Collectors.toList()));
+
+    System.out.println(allSpot);
   }
+
 }

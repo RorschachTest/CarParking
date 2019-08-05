@@ -1,4 +1,4 @@
-import processors.InputParser;
+import com.parkinglot.processors.InputParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
